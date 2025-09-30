@@ -1,0 +1,33 @@
+# Unreal Engine project gitignore
+
+# Visual Studio
+.vs/
+*.VC.db
+*.VC.opendb
+*.sln
+
+# Unreal Engine
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+# Build products
+*.pdb
+*.exe
+*.dll
+*.app
+*.dylib
+*.so
+
+# User/Config files
+*.suo
+*.user
+*.userprefs
+*.log
+
+# Mac
+.DS_Store
+
+# Backup
+*.bak
