@@ -39,7 +39,8 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Zoom")
 	float ZoomInterpSpeed = 3.f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "FlashLight")
+public:
+		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "FlashLight")
 	bool bCanUseFlashLight = false;
 
 	

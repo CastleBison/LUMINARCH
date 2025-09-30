@@ -24,6 +24,9 @@ public:
 		mDir = Dir;
 	}
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool bCanUseFlashLight = false; // ¸â¹öº¯¼ö
+
 public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 };
