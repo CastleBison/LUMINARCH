@@ -7,6 +7,7 @@
 
 
 
+
 AMyCharacter::AMyCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -85,6 +86,7 @@ AMyCharacter::AMyCharacter()
 	mCamera->PostProcessSettings.bOverride_DepthOfFieldFocalDistance = true;
 	mCamera->PostProcessSettings.bOverride_DepthOfFieldDepthBlurAmount = true;
 	mCamera->PostProcessSettings.bOverride_DepthOfFieldDepthBlurRadius = true;
+
 }
 
 
@@ -183,6 +185,8 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 		EnhancedInput->BindAction(InputCDO->mPause, ETriggerEvent::Started, this, &AMyCharacter::PauseKey);
 
 		EnhancedInput->BindAction(InputCDO->mPick, ETriggerEvent::Started, this, &AMyCharacter::PickKey);
+
+		EnhancedInput->BindAction(InputCDO->mOpen, ETriggerEvent::Triggered, this, &AMyCharacter::OpenKey);
 	}
 }
 
@@ -237,6 +241,9 @@ void AMyCharacter::FlashLightKey(const FInputActionValue& Value)
 		const bool bNewOn = !mFlashLight->IsVisible();
 		mFlashLight->SetVisibility(bNewOn, true);
 		UE_LOG(LogTemp, Warning, TEXT("FlashLight %s"), bNewOn ? TEXT("ON") : TEXT("OFF"));
+
+		// 소리가 왜 안들릴까?
+		USoundBase* Sound = LoadObject<USoundBase>(nullptr,	TEXT("/Game/Free_Sounds_Pack/wav/Wood_Chop_1-4.Wood_Chop_1-4"));
 	}
 }
 
@@ -256,8 +263,6 @@ void AMyCharacter::UnlockFlashLight()
 		mFlashLight->SetHiddenInGame(false);
 		mFlashLight->SetVisibility(false, true); // 언락은 '사용 가능'만 의미, 기본은 꺼짐
 	}
-
-	UE_LOG(LogTemp, Warning, TEXT("FlashLight UnLocked"));
 }
 
 void AMyCharacter::PauseKey(const FInputActionValue& Value)
@@ -272,6 +277,14 @@ void AMyCharacter::PickKey(const FInputActionValue& Value)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("[Pick] V pressed"));
 		UnlockFlashLight();
+	}
+}
+
+void AMyCharacter::OpenKey(const FInputActionValue& Value)
+{
+	if (Value.Get<bool>())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[Open] R pressed"));
 	}
 }
 

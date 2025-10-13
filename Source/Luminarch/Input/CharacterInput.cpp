@@ -34,4 +34,8 @@ UCharacterInput::UCharacterInput()
 	static ConstructorHelpers::FObjectFinder<UInputAction> Pick(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_Pick.IA_Pick'"));
 
 	mPick = Pick.Object;
+
+	static ConstructorHelpers::FObjectFinder<UInputAction> Open(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_Open.IA_Open'"));
+
+	mOpen = Open.Object;
 }

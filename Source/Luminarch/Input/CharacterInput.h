@@ -17,12 +17,30 @@ public:
 	UCharacterInput();
 
 public:
-	TObjectPtr<UInputMappingContext>	mContext;
-	TObjectPtr<UInputAction>			mMove;
-	TObjectPtr<UInputAction>			mCameraRotation;
-	TObjectPtr<UInputAction>			mRotation;
-	TObjectPtr<UInputAction>			mActionZoom;
-	TObjectPtr<UInputAction>			mFlashLight;
-	TObjectPtr<UInputAction>			mPause;
-	TObjectPtr<UInputAction>			mPick;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UInputMappingContext> mContext;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UInputAction> mMove;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UInputAction> mCameraRotation;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UInputAction> mRotation;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UInputAction> mActionZoom;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UInputAction> mFlashLight;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UInputAction> mPause;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UInputAction> mPick;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UInputAction> mOpen;
 };

@@ -75,5 +75,6 @@ public:
 	void FlashLightKey(const FInputActionValue& Value);
 	void PauseKey(const FInputActionValue& Value);
 	void PickKey(const FInputActionValue& Value);
+	void OpenKey(const FInputActionValue& Value);
 
 };
