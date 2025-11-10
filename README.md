@@ -84,20 +84,58 @@ https://youtu.be/dvbiTv6PgNM
 
 ##  기술적 구현 (Unreal C++)
 
-**1. 상호작용 시스템**
-- `IInteractable` 인터페이스 기반
-- 문, 스위치, 손전등, 단서 오브젝트에 공통 적용
+##  C++ 구현
 
-**2. 손전등 시스템**
-- C++ 기반 라이트 컴포넌트 제어
-- `F` 입력 시 ON/OFF 토글 처리
+### 1. 플레이어 캐릭터 & 입력 시스템
+- 클래스: `AMyCharacter`, `ALuminarchGameMode`  
+- **기능:** 이동, 회전, 줌, 손전등, 상호작용 입력 처리  
+- **사용:** `Enhanced Input` 시스템  
+- `GameMode`에서 `DefaultPawnClass`를 `AMyCharacter`로 지정  
 
-**3. 빛 단서 퍼즐 로직**
-- 어둠속에 숨겨진 힌트
+### 2. 카메라 & 줌(Zoom) 시스템
+- `SpringArm` + `CameraComponent` 구성  
+- FOV를 `FInterpTo`로 보간 → 부드러운 줌 인/아웃  
+- 카메라 전방으로 `LineTraceSingle()` 실행 후  
+  `DepthOfFieldFocalDistance`를 갱신하여 **자동 초점(Auto Focus)** 구현  
 
-**4. UI & 위젯 시스템**
-- UMG로 단서, 인터랙션 텍스트 HUD 구성
-- 이벤트 기반 업데이트 처리
+### 3. 손전등 시스템
+- `USpotLightComponent`를 카메라에 부착  
+- ON/OFF 토글 및 사용 가능 여부(`bCanUseFlashLight`) 제어  
+- `UnlockFlashLight()`로 퍼즐 해금 시 손전등 기능 활성화  
+
+### 4. 이동 & 애니메이션 연동
+- `UCharacterAnimInstance`에서 이동 속도(`Velocity.Size()`) 및  
+  손전등 사용 상태(`bCanUseFlashLight`)를 애니메이션 파라미터로 전달  
+- 이동 여부(`bIsMoving`)를 기반으로 걷기/정지 애니메이션 전환  
+
+### 5. 발소리 시스템
+- 이동 중 일정 주기로 `FootstepSound` 재생  
+- `UGameplayStatics::PlaySoundAtLocation()` 사용  
+- `FootstepInterval`로 발소리 간격 조절  
+
+### 6. 게임 상태 제어
+- `PauseKey`, `PickKey`, `OpenKey` 입력 감지  
+- C++에서 이벤트 트리거만 담당, 실제 동작은 블루프린트에서 확장  
+
+---
+
+###  블루프린트 구현
+
+### 1. 상호작용 시스템
+- 인터페이스: `IInteractable`  
+- 문, 스위치, 단서 등 오브젝트에 공통 적용  
+- C++ 입력 → 인터페이스 호출로 블루프린트 이벤트 실행  
+
+### 2. 단서 & 퍼즐 시스템
+- 손전등의 빛에 반응하는 힌트 퍼즐 구현  
+- `OnComponentBeginOverlap` 또는 `OnHit` 이벤트 기반  
+- 특정 밝기 조건 충족 시 머티리얼 파라미터 변경  
+- `PickKey` 입력 시 `UnlockFlashLight()`와 연동  
+
+### 3. UI & 위젯 시스템
+- `UMG`로 HUD, 단서 표시, 인터랙션 텍스트 구성  
+- C++에서 이벤트 발생 시 블루프린트 위젯으로 데이터 전달  
+- 위젯 내부에서 상태 갱신 및 애니메이션 연출 처리 
 
 ---
 
